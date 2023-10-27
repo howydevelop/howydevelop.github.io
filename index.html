@@ -1,1 +1,100 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Firebase Authentication</title>
+</head>
+
+<body>
+    <div id="login-box">
+        <div class ="left">
+            <h1>Sign up</h1>
+            <input type="text" id="username" name="username" placeholder="username" />
+            <input type="text" id="email" name="email" placeholder="E-mail" />
+            <input type="password" id="password" name="password" placeholder="Password" />
+            <input type="submit" id="signUp" name="signup_submit" value="Sign up" />
+        </div>
+    </div>
+
+    <div class="right">
+        <span class="loginwith">Sign in with<br/>Social network</span>
+        <button class="social-signin facebook">Log in with facebook</button>
+        <button class="social-signin twitter">Log in with Twitter</button>
+        <button class="social-signin google">Log in with Google</button>
+    </div>
+    <div class="or">OR</div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+          authDomain: "auth-e6c3e.firebaseapp.com",
+          databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+          projectId: "auth-e6c3e",
+          storageBucket: "auth-e6c3e.appspot.com",
+          messagingSenderId: "779843063671",
+          appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+        function writeUserData(userId, name, email, imageUrl) 
+        {
+            const db = getDatabase();
+            set(ref(db, 'users/' + userId), {
+                username: name,
+                email: email,
+            });
+        }
+
+        //const dbRef = ref(getDatabase());
+        function checkIfExist(email)
+        {
+            get(child(database, `users/${1}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                alert('userExists');
+                return -1;
+            } else {
+                alert('notExists');
+                return 0;
+            }
+            }).catch((error) => {
+            console.error(error);
+            });
+        }
+
+        signUp.addEventListener('click', (e)=>{
+            var email = document.getElementById('email').value;
+            var username = document.getElementById('password').value;
+            var password = document.getElementById('username').value;
+            if(checkIfExist(email) == -1)
+            {
+                alert('userExists');
+            }
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                writeUserData(1, username, email, null);
+                alert('userCreated');
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('errorMessage');
+            });
+
+        });
+      </script>
+</body>
+
+</html>
