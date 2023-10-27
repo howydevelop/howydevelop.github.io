@@ -4,16 +4,9 @@
 <head>
 <title>Firebase Authentication</title>
 
-<script src="jquery.js"></script> 
-<script> 
-$(function(){
-  $("#includedContent").load("b.html"); 
-});
-</script> 
-
 </head>
 
-<body>
+<body style="background-color: aquamarine;">
     <div id="login-box">
         <div class ="left">
             <h1>Sign up</h1>
@@ -75,7 +68,6 @@ $(function(){
                 const user = userCredential.user;
                 writeUserData(1, username, email, null);
                 alert('userCreated');
-                <meta http-equiv = "refresh" content = " time ; url = https://ide.geeksforgeeks.org"/>
                 // ...
             })
             .catch((error) => {
