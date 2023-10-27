@@ -56,20 +56,6 @@
         }
 
         //const dbRef = ref(getDatabase());
-        function checkIfExist(email)
-        {
-            get(child(database, `users/${1}`)).then((snapshot) => {
-            if (snapshot.exists()) {
-                alert('userExists');
-                return -1;
-            } else {
-                alert('notExists');
-                return 0;
-            }
-            }).catch((error) => {
-            console.error(error);
-            });
-        }
 
         signUp.addEventListener('click', (e)=>{
             var email = document.getElementById('email').value;
