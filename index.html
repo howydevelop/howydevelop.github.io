@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <meta charset = "UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content = "width=device-width",
@@ -27,7 +28,7 @@
             <div class="input-box">
                 <input type="text" id="email" name="email" placeholder="E-mail" />
             </div class=btn>
-            <input type="submit" id="signUp" class= btn name="signup_submit" value="Sign up" />
+            <input type="button" id="signUp" class= btn name="signup_submit" value="Sign up" />
         </form>
     </div>
     <script type="module">
@@ -66,9 +67,9 @@
 
         signUp.addEventListener('click', (e)=>{
             var email = document.getElementById('email').value;
-            var username = document.getElementById('password').value;
-            var password = document.getElementById('username').value;
-            const dbref = ref(database)
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            const dbref = ref(database);
             createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
@@ -89,7 +90,7 @@
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert('errorMessage');
+                alert(error.message);
             });
 
         });

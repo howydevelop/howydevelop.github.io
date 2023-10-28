@@ -15,7 +15,7 @@ body
     align-items: center;
     min-height: 100vh;
     background:seagreen;
-    background:url(/images/fireland.jpg);
+    background:url(fireland.jpg);
     background-size: cover;
 }
 
@@ -35,7 +35,7 @@ body
 .wrapper h2
 {
     font-size: 60px;
-    transform: translateY(-200%);
+    transform: translateY(-150%);
 }
 .wrapper .input-box{
     position: relative;
