@@ -28,7 +28,8 @@
             <div class="input-box">
                 <input type="text" id="email" name="email" placeholder="E-mail" />
             </div class=btn>
-            <input type="button" id="signUp" class= btn name="signup_submit" value="Sign up" />
+            <input type="button" id="join" class= btn name="join_button" value="join" />
+            <input type="button" id="create" class= btn name="create_button" value="create" />
         </form>
     </div>
     <script type="module">
@@ -65,7 +66,13 @@
 
         //const dbRef = ref(getDatabase());
 
-        signUp.addEventListener('click', (e)=>{
+        join.addEventListener('click',(e)=>
+        {
+
+
+        });
+        
+        create.addEventListener('click', (e)=>{
             var email = document.getElementById('email').value;
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
