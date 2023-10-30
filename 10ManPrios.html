@@ -15,6 +15,7 @@
 <body>
     <div class = wrapper>
         <h2>Druckwelle</h2>
+        <h1 id="raidPinDisplay">Raid: </h1>
         <table>
             <tr>
                 <th>Fixate</th>
@@ -25,10 +26,10 @@
                 <th style="padding: 0px 150px 0px 0px; ;" >Prio 3</th>
             </tr>
             <tr>
-                <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username1</td>
+                <th><button style="scale: 150%;resize: auto;">Fixed</button></th>
+                <td >username1</td>
                 <td>class1</td>
-                <td>item</td>
+                <td id = "prio1">item</td>
                 <td>item</td>
                 <td>item</td>
             </tr>
@@ -107,8 +108,58 @@
           </table>
     </div>
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+            authDomain: "auth-e6c3e.firebaseapp.com",
+            databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+            projectId: "auth-e6c3e",
+            storageBucket: "auth-e6c3e.appspot.com",
+            messagingSenderId: "779843063671",
+            appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const raidPin = localStorage.getItem('raidPin'); 
+
+         //getting LeaderPin from firebase
+        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin+'/players/player: miki');
         
-      </script>
+        function getAllData(){
+            onValue(leaderPinRef, (snapshot) => {
+            const data = snapshot.val();
+            
+            console.log(data);
+            document.getElementById("prio1").innerHTML = data['prio1'];
+            
+            
+        });
+        }
+      
+        window.onload = getAllData;
+        //writing Username and Class to firebase
+        function writeUserData(username,playerClass,) 
+        {
+            const db = getDatabase();
+            set(ref(db, 'raids/raid: ' + raidPin+'/players/player: ' + username), 
+            {
+                playerClass: playerClass,
+                prio1: "text",
+                prio2: 2,
+                prio3: 3
+            
+            });
+        }
+
+        var text = document.getElementById('raidPinDisplay');
+        
+        text.innerHTML = "Raid Pin: " +raidPin;
+
+
+
+    </script>
 </body>
 
 </html>

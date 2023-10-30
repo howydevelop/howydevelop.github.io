@@ -15,15 +15,15 @@
 <body>
     <div class = "wrapper1">
         <h2 style="position: absolute;padding: 0px;transform: translateX(-10%) translateY(-150%);">Druckwelle</h2>
-        <form action="">
+        <form action="" style="line-height: 60px;">
             
             <div class = total-wraper>
                 <div class="input-box">
                     <input type="text" id="username" placeholder="Username" required>
-                    
                 </div>
 
                 <div class = "classes">
+                    
                     <label for="classes">Class:
                         <select name="classes" id="classes_Select" >
                             <option style="background-color:rgb(118, 0, 0)" value="Warrior">Warrior</option>
@@ -41,11 +41,20 @@
                 </div>
                 
                 <div >
+                    <label1 style="padding: 10px 140px 10px 20px;">Players: 
+                        <select  name="playerAmount" id="playerAmount">
+                            <option style="background-color: black;" value="10">10</option>
+                            <option style="background-color: black;" value="25">25</option>
+                        </select>
+                    </label1> 
+                </div>
+                <div >
                     <label1 >Leader Pin:</label1> <label2 id= "leaderPin"></label2>
                 </div>
-                
                 <input type="button" id="create" class= btn name="create_button" value="Create" />
-            </div>
+            </div> 
+            
+            
            
         </form>
     </div>
@@ -94,9 +103,10 @@
         create.addEventListener('click', (e)=>{
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
-            console.log(" username: "+ username + " , player class: " + playerClass);
+            var playerAmount = document.getElementById('playerAmount').value;
+            console.log(" username: "+ username + " , player class: " + playerClass + "Amount of Player: " + playerAmount);
             writeUserData(username,playerClass);
-            open('Prios.html');
+            open('10ManPrios.html');
         });
 
     </script>
