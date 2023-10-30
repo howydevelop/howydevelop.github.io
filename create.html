@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <meta charset = "UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content = "width=device-width",
+    inital-scale="1.0">
+    <title>Druckwelle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class = "wrapper1">
+        <form action="">
+          
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username" required>
+                
+            </div>
+
+            <div class = "classes">
+                <label for="classes">Class:
+                    <select name="classes" id="classes_Select" >
+                        <option style="background-color:rgb(118, 0, 0)" value="Warrior">Warrior</option>
+                        <option style="background-color:rgb(113, 123, 54)"value="Paladin">Paladin</option>
+                        <option style="background-color:rgb(132, 165, 161)"value="Hunter">Hunter</option>
+                        <option style="background-color:rgb(194, 77, 174)"value="Mage">Mage</option>
+                        <option style="background-color:rgb(46, 120, 80)"value="Rouge">Rouge</option>
+                        <option style="background-color:rgb(139, 136, 136)"value="Priest">Priest</option>
+                        <option style="background-color:rgb(20, 196, 255)"value="Shaman">Shaman</option>
+                        <option style="background-color:rgb(49, 255, 118)"value="Druid">Druid</option>
+                        <option style="background-color:rgb(83, 83, 83)"value="Warlock">Warlock</option>
+                        <option style="background-color:rgb(0, 0, 0)"value="Death-Knight">Death-Knight</option>
+                    </select>
+                </label>
+            </div>
+            
+            <div >
+                <label1 >Host Pin:</label1> <label2 id= "host_Pin">abc</label2>
+            </div>
+            
+            <input type="button" id="create" class= btn name="create_button" value="create" />
+        </form>
+    </div>
+    <script>
+        
+        create.addEventListener('click', (e)=>{
+           var text = document.getElementById("host_Pin");
+            text.innerHTML = 1234;
+            
+
+        });
+
+    </script>
+</body>
+
+</html>
