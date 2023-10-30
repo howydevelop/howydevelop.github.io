@@ -74,7 +74,7 @@ body
 .wrapper .btn {
     width: 40%;
     height: 40px;
-    transform: translateX(20%);
+    transform: translateX(25%);
     background: #fff;
     border:none;
     outline:none;
@@ -97,6 +97,9 @@ table, th, td {
 .wrapper1{
     width: 420p;
     color:#fff;
+    border:2px solid rgba(255,255,255,.2);
+    padding: 20px;
+    border-radius: 20%;
 
 }
 
@@ -149,7 +152,7 @@ table, th, td {
 .wrapper1 .btn {
     width: 40%;
     height: 40px;
-    transform: translateX(70%) translateY(70%);
+    transform: translateX(70%) translateY(-30%);
     background: #fff;
     border:none;
     outline:none;
@@ -164,12 +167,11 @@ table, th, td {
 }
 .wrapper1 .Classes
 {
-    transform: translateX(20%) translateY(-60%);
+    font-size: 16px;
     
 }
 .wrapper1 label
 {
-   transform: translateX(-20%);
     background-color: transparent;
     background:transparent;
     border:none;
@@ -178,6 +180,33 @@ table, th, td {
     border-radius: 40px;
     font-size: 16px;
     color:#fff;
-    padding:20px 45px 20px 20px;
+    padding:10px 60px 10px 20px;
     
+}
+.wrapper1 label1
+{
+    line-height: 100px;
+    background-color: transparent;
+    background:transparent;
+    border:none;
+    outline: none;
+    border:2px solid rgba(255,255,255,.2);
+    border-radius: 40px;
+    font-size: 16px;
+    color:#fff;
+    padding:10px 160px 10px 20px;
+}
+
+.wrapper1 select
+{
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+    border:none;
+}
+.wrapper1 label2
+{
+    position: absolute;
+    transform: translateX(-150px) translateY(38px);
+    color: rgb(255, 255, 255);
 }

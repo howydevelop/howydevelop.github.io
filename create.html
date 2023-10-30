@@ -14,44 +14,89 @@
 
 <body>
     <div class = "wrapper1">
+        <h2 style="position: absolute;padding: 0px;transform: translateX(-10%) translateY(-150%);">Druckwelle</h2>
         <form action="">
-          
-            <div class="input-box">
-                <input type="text" id="username" placeholder="Username" required>
-                
-            </div>
+            
+            <div class = total-wraper>
+                <div class="input-box">
+                    <input type="text" id="username" placeholder="Username" required>
+                    
+                </div>
 
-            <div class = "classes">
-                <label for="classes">Class:
-                    <select name="classes" id="classes_Select" >
-                        <option style="background-color:rgb(118, 0, 0)" value="Warrior">Warrior</option>
-                        <option style="background-color:rgb(113, 123, 54)"value="Paladin">Paladin</option>
-                        <option style="background-color:rgb(132, 165, 161)"value="Hunter">Hunter</option>
-                        <option style="background-color:rgb(194, 77, 174)"value="Mage">Mage</option>
-                        <option style="background-color:rgb(46, 120, 80)"value="Rouge">Rouge</option>
-                        <option style="background-color:rgb(139, 136, 136)"value="Priest">Priest</option>
-                        <option style="background-color:rgb(20, 196, 255)"value="Shaman">Shaman</option>
-                        <option style="background-color:rgb(49, 255, 118)"value="Druid">Druid</option>
-                        <option style="background-color:rgb(83, 83, 83)"value="Warlock">Warlock</option>
-                        <option style="background-color:rgb(0, 0, 0)"value="Death-Knight">Death-Knight</option>
-                    </select>
-                </label>
+                <div class = "classes">
+                    <label for="classes">Class:
+                        <select name="classes" id="classes_Select" >
+                            <option style="background-color:rgb(118, 0, 0)" value="Warrior">Warrior</option>
+                            <option style="background-color:rgb(113, 123, 54)"value="Paladin">Paladin</option>
+                            <option style="background-color:rgb(132, 165, 161)"value="Hunter">Hunter</option>
+                            <option style="background-color:rgb(194, 77, 174)"value="Mage">Mage</option>
+                            <option style="background-color:rgb(46, 120, 80)"value="Rouge">Rouge</option>
+                            <option style="background-color:rgb(139, 136, 136)"value="Priest">Priest</option>
+                            <option style="background-color:rgb(20, 196, 255)"value="Shaman">Shaman</option>
+                            <option style="background-color:rgb(49, 255, 118)"value="Druid">Druid</option>
+                            <option style="background-color:rgb(83, 83, 83)"value="Warlock">Warlock</option>
+                            <option style="background-color:rgb(0, 0, 0)"value="Death-Knight">Death-Knight</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <div >
+                    <label1 >Leader Pin:</label1> <label2 id= "leaderPin"></label2>
+                </div>
+                
+                <input type="button" id="create" class= btn name="create_button" value="Create" />
             </div>
-            
-            <div >
-                <label1 >Host Pin:</label1> <label2 id= "host_Pin">abc</label2>
-            </div>
-            
-            <input type="button" id="create" class= btn name="create_button" value="create" />
+           
         </form>
     </div>
-    <script>
+    <script type = "module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
         
-        create.addEventListener('click', (e)=>{
-           var text = document.getElementById("host_Pin");
-            text.innerHTML = 1234;
-            
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+            authDomain: "auth-e6c3e.firebaseapp.com",
+            databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+            projectId: "auth-e6c3e",
+            storageBucket: "auth-e6c3e.appspot.com",
+            messagingSenderId: "779843063671",
+            appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
 
+        //getting raidPin from localStorage
+        const raidPin = localStorage.getItem('raidPin'); 
+        console.log("raidPin: " +raidPin);
+
+        //getting LeaderPin from firebase
+        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin +'/leaderPin');
+        onValue(leaderPinRef, (snapshot) => {
+            const data = snapshot.val();
+            var text = document.getElementById("leaderPin");
+            text.innerHTML = data
+        });
+
+        //writing Username and Class to firebase
+        function writeUserData(username,playerClass,) 
+        {
+            const db = getDatabase();
+            set(ref(db, 'raids/raid: ' + raidPin+'/players/player: ' + username), 
+            {
+                playerClass: playerClass,
+                prio1: 1,
+                prio2: 2,
+                prio3: 3
+            
+            });
+        }
+
+        create.addEventListener('click', (e)=>{
+            var username = document.getElementById('username').value;
+            var playerClass = document.getElementById('classes_Select').value;
+            console.log(" username: "+ username + " , player class: " + playerClass);
+            writeUserData(username,playerClass);
+            open('Prios.html');
         });
 
     </script>

@@ -20,14 +20,16 @@
                 <input type="text" id="pin" placeholder="Pin" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
-            <input type="button" id="check" class= btn name="check_Button" value="Check" />
+            <input type="button" id="join" class= btn name="join_Button" value="Join" />
+            <input type="button" id="create" class= btn name="create" value="Create" />
+            
         </form>
     </div>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
@@ -45,33 +47,40 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        const auth = getAuth();
-        function writeUserData(raidPin) 
+
+        function writeUserData(raidPin, leaderPin) 
         {
             const db = getDatabase();
-                set(ref(db, 'raids/' + raidPin), {
-                pin: raidPin,
+            set(ref(db, 'raids/raid: ' + raidPin), {
+                leaderPin: leaderPin
             });
         }
 
         //const dbRef = ref(getDatabase());
 
        
-        
-        check.addEventListener('click', (e)=>{
+        join.addEventListener('click', (e)=>{
+           
+        });
+
+        create.addEventListener('click', (e)=>{
             var raidPin = document.getElementById('pin').value;
-            // need to check if entered pin is 4 or 6 digit if 4 digit got to join.html else go to create.html
+            if(raidPin <10000 && raidPin > 999)
+            {
+                var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
+                const dbref = ref(database);
 
-            const dbref = ref(database);
-           
-
-            writeUserData(raidPin,);
-            alert('userCreated');
-            open("create.html");
-                
-            
-           
-
+                writeUserData(raidPin, raidLeaderPin);
+                localStorage.setItem('raidPin',raidPin);
+                alert('raidCreated');
+                open('create.html');
+                //window.location.replace("create.html");  IMA PROBLEM DA OTVORI DRUGI HTML PRIJE 
+                //NEGO STO WRITE USER DATA zavrsi.
+            }
+            else
+            {
+                alert('Please use 4 Digits to Create a Raid');
+            }
         });
       </script>
 </body>
