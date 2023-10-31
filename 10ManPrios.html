@@ -27,83 +27,83 @@
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td >username1</td>
-                <td>class1</td>
-                <td id = "prio1">item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username1"></td>
+                <td id = "playerClass1"></td>
+                <td id ="player1Prio1"></td>
+                <td id = "player1Prio2"></td>
+                <td id = "player1Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username2</td>
-                <td>class2</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username2"></td>
+                <td id = "playerClass2"></td>
+                <td id ="player2Prio1"></td>
+                <td id = "player2Prio2"></td>
+                <td id = "player2Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username3</td>
-                <td>class3</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username3"></td>
+                <td id = "playerClass3"></td>
+                <td id ="player3Prio1"></td>
+                <td id = "player3Prio2"></td>
+                <td id = "player3Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username4</td>
-                <td>class4</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username4"></td>
+                <td id = "playerClass4"></td>
+                <td id ="player4Prio1"></td>
+                <td id = "player4Prio2"></td>
+                <td id = "player4Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username5</td>
-                <td>class5</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username5"></td>
+                <td id = "playerClass5"></td>
+                <td id ="player5Prio1"></td>
+                <td id = "player5Prio2"></td>
+                <td id = "player5Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username6</td>
-                <td>class6</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username6"></td>
+                <td id = "playerClass6"></td>
+                <td id ="playe6Prio1"></td>
+                <td id = "playe6Prio2"></td>
+                <td id = "player6Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username7</td>
-                <td>class7</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username7"></td>
+                <td id = "playerClass7"></td>
+                <td id ="playe7Prio1"></td>
+                <td id = "playe7Prio2"></td>
+                <td id = "player7Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username8</td>
-                <td>class8</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username8"></td>
+                <td id = "playerClass8"></td>
+                <td id ="playe8Prio1"></td>
+                <td id = "playe8Prio2"></td>
+                <td id = "player8Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username9</td>
-                <td>class9</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username9"></td>
+                <td id = "playerClass9"></td>
+                <td id ="playe9Prio1"></td>
+                <td id = "playe9Prio2"></td>
+                <td id = "player9Prio3"></td>
             </tr>
             <tr>
                 <th><button style="scale: 150%;">Fixed</button></th>
-                <td>username10</td>
-                <td>class10</td>
-                <td>item</td>
-                <td>item</td>
-                <td>item</td>
+                <td id = "username10"></td>
+                <td id = "playerClass10"></td>
+                <td id ="playe10Prio1"></td>
+                <td id = "playe10Prio2"></td>
+                <td id = "player10Prio3"></td>
             </tr>
           </table>
     </div>
@@ -125,25 +125,46 @@
         const raidPin = localStorage.getItem('raidPin'); 
 
          //getting LeaderPin from firebase
-        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin+'/players/player: miki');
-        
-        function getAllData(){
+        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin+'/players');
+        var dataOfTable;
+        function getAllData(dataOfTable){
             onValue(leaderPinRef, (snapshot) => {
             const data = snapshot.val();
-            
-            console.log(data);
-            document.getElementById("prio1").innerHTML = data['prio1'];
-            
-            
+            var i = 1;
+            for(Element in data)
+            {
+                const username = Element;
+                const userdata = data[Element];
+                const playerClass = userdata["playerClass"];
+                const prio1 =    userdata["prio1"];
+                const prio2 = userdata["prio2"];
+                const prio3 = userdata["prio3"];
+
+                document.getElementById("username"+i).innerHTML = username;
+                document.getElementById("playerClass"+i).innerHTML = playerClass;
+                document.getElementById("player"+i+"Prio1").innerHTML =prio1;
+                document.getElementById("player"+i+"Prio2").innerHTML =prio2;
+                document.getElementById("player"+i+"Prio3").innerHTML =prio3;
+
+                console.log(username);
+                console.log(playerClass);
+                console.log(prio1);
+                console.log(prio2);
+                console.log(prio3);
+                i++;
+
+            }
+            // you can go deeper in database tree by setting a war to current branch and then going a folder lower on next var
         });
         }
-      
+        
         window.onload = getAllData;
+
         //writing Username and Class to firebase
         function writeUserData(username,playerClass,) 
         {
             const db = getDatabase();
-            set(ref(db, 'raids/raid: ' + raidPin+'/players/player: ' + username), 
+            set(ref(db, 'raids/raid: ' + raidPin+'/players/' + username), 
             {
                 playerClass: playerClass,
                 prio1: "text",

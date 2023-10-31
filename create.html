@@ -90,7 +90,7 @@
         function writeUserData(username,playerClass,) 
         {
             const db = getDatabase();
-            set(ref(db, 'raids/raid: ' + raidPin+'/players/player: ' + username), 
+            set(ref(db, 'raids/raid: ' + raidPin+'/players/' + username), 
             {
                 playerClass: playerClass,
                 prio1: 1,
