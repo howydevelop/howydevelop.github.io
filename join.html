@@ -39,19 +39,7 @@
                         </select>
                     </label>
                 </div>
-                
-                <div >
-                    <label1 style="padding: 10px 140px 10px 20px;">Players: 
-                        <select  name="playerAmount" id="playerAmount">
-                            <option style="background-color: black;" value="10">10</option>
-                            <option style="background-color: black;" value="25">25</option>
-                        </select>
-                    </label1> 
-                </div>
-                <div >
-                    <label1 >Leader Pin:</label1> <label2 id= "leaderPin"></label2>
-                </div>
-                <input type="button" id="create" class= btn name="create_button" value="Create" />
+                <input type="button" id="join" class= btn name="join_button" value="Join" />
             </div> 
             
             
@@ -100,13 +88,13 @@
             });
         }
 
-        create.addEventListener('click', (e)=>{
+        join.addEventListener('click', (e)=>{
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
-            var playerAmount = document.getElementById('playerAmount').value;
-            console.log(" username: "+ username + " , player class: " + playerClass + "Amount of Player: " + playerAmount);
+            
+            
             writeUserData(username,playerClass);
-            open('prioSelect.html');
+            open('10ManPrios.html');
         });
 
     </script>
