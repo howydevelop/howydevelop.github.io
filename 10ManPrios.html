@@ -125,7 +125,7 @@
         const raidPin = localStorage.getItem('raidPin'); 
 
          //getting LeaderPin from firebase
-        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin+'/players');
+        const leaderPinRef = ref(db, 'raids/' + raidPin+'/players');
         
         function fillTable(){
             onValue(leaderPinRef, (snapshot) => {
@@ -136,7 +136,7 @@
                 const username = Element;
                 const userdata = data[Element];
                 const playerClass = userdata["playerClass"];
-                const prio1 =    userdata["prio1"];
+                const prio1 =  userdata["prio1"];
                 const prio2 = userdata["prio2"];
                 const prio3 = userdata["prio3"];
 
@@ -146,11 +146,6 @@
                 document.getElementById("player"+i+"Prio2").innerHTML =prio2;
                 document.getElementById("player"+i+"Prio3").innerHTML =prio3;
 
-                console.log(username);
-                console.log(playerClass);
-                console.log(prio1);
-                console.log(prio2);
-                console.log(prio3);
                 i++;
 
             }
