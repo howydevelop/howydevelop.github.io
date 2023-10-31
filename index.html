@@ -22,9 +22,13 @@
             </div>
             <input type="button" id="join" class= btn name="join_Button" value="Join" />
             <input type="button" id="create" class= btn name="create" value="Create" />
-            
+            <div class="errorField" id = "errorField" style=" background-color: rgba(0, 0 ,0, 0.3); text-align: center; transform: translateY(50%); color: transparent; font-size-adjust: none; font: bold;">
+                
+            </div>
         </form>
     </div>
+    
+    
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
@@ -67,35 +71,53 @@
             gData = data;
         });
         }
-       
-        //const dbRef = ref(getDatabase());
-
-       
-       
-        join.addEventListener('click', (e)=>{
-            var raidPin = document.getElementById('pin').value;
-            var raidExisting = 0;
-            for (Element in gData)
+        function errorMessege(state,text)
+        {
+            var error = document.getElementById("errorField");
+            if(state)
             {
-                if(Element == raidPin)
-                {
-                   raidExisting = 1;
-                }
-            }
-            if(raidExisting)
-            {
-                localStorage.setItem('raidPin',raidPin);
-                open('join.html');
+                error.textContent = text;
+                error.style.color = "white";
             }
             else
             {
-                alert("Raid not existing");
+                error.textContent ="";
             }
+
+        }
+       
+        join.addEventListener('click', (e)=>{
+
+            // musst check if leader pin or normal pin
+            var raidPin = document.getElementById('pin').value;
+            if(raidPin > 999 && raidPin <10000)
+            {
+                var raidExisting = 0;
+                for (Element in gData)
+                {
+                    if(Element == raidPin)
+                    {
+                    raidExisting = 1;
+                    }
+                }
+                if(raidExisting)
+                {
+                    localStorage.setItem('raidPin',raidPin);
+                    open('join.html');
+                }
+                else
+                {
+                    errorMessege(1,"Raid not existing");
+                }
+            }
+           
         });
 
         create.addEventListener('click', (e)=>{
             var raidPin = document.getElementById('pin').value;
             var pinUniqe = 1;
+
+            //checking trough data to check if the raid already exists
             for (Element in gData)
             {
                 if(Element == raidPin)
@@ -103,24 +125,26 @@
                     pinUniqe = 0;
                 }
             }
-            
+
+            //if everything is ok raid gets created
             if(raidPin <10000 && raidPin > 999 && pinUniqe)
             {
                 var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
-                const dbref = ref(database);
 
                 writeUserData(raidPin, raidLeaderPin);
+
                 localStorage.setItem('raidPin',raidPin);
-                alert('raidCreated');
+
+                errorMessege(1,"Raid created");
                 open('create.html');
             }
             else if(pinUniqe == 0)
             {
-                alert('Raid Pin already in use');
+                errorMessege(1,"Raid Pin already in use");
             }
             else
             {
-                alert('Please use 4 Digits to Create a Raid');
+                errorMessege(1,"Please use 4 Digits to Create a Raid");
             }
         });
       </script>

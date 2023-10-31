@@ -76,10 +76,9 @@
 
         //getting raidPin from localStorage
         const raidPin = localStorage.getItem('raidPin'); 
-        console.log("raidPin: " +raidPin);
 
         //getting LeaderPin from firebase
-        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin +'/leaderPin');
+        const leaderPinRef = ref(db, 'raids/' + raidPin +'/leaderPin');
         onValue(leaderPinRef, (snapshot) => {
             const data = snapshot.val();
             var text = document.getElementById("leaderPin");
@@ -90,7 +89,7 @@
         function writeUserData(username,playerClass,) 
         {
             const db = getDatabase();
-            set(ref(db, 'raids/raid: ' + raidPin+'/players/' + username), 
+            set(ref(db, 'raids/'+ raidPin+'/players/' + username), 
             {
                 playerClass: playerClass,
                 prio1: 1,
@@ -104,7 +103,8 @@
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
             var playerAmount = document.getElementById('playerAmount').value;
-            console.log(" username: "+ username + " , player class: " + playerClass + "Amount of Player: " + playerAmount);
+
+            
             writeUserData(username,playerClass);
             open('prioSelect.html');
         });
