@@ -8,7 +8,7 @@
     <meta name="viewport" content = "width=device-width",
     inital-scale="1.0">
     <title>Druckwelle</title>
-    <link rel="stylesheet" href="priosStyle.css">
+    <link rel="stylesheet" href="tableStyle.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
@@ -126,8 +126,8 @@
 
          //getting LeaderPin from firebase
         const leaderPinRef = ref(db, 'raids/raid: ' + raidPin+'/players');
-        var dataOfTable;
-        function getAllData(dataOfTable){
+        
+        function fillTable(){
             onValue(leaderPinRef, (snapshot) => {
             const data = snapshot.val();
             var i = 1;
@@ -158,7 +158,7 @@
         });
         }
         
-        window.onload = getAllData;
+        window.onload = fillTable;
 
         //writing Username and Class to firebase
         function writeUserData(username,playerClass,) 

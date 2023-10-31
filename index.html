@@ -28,7 +28,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        import { getDatabase,onValue, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
         
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -48,25 +48,63 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        window.onload = getAllData;
+        var gData;
+
         function writeUserData(raidPin, leaderPin) 
         {
             const db = getDatabase();
-            set(ref(db, 'raids/raid: ' + raidPin), {
+            set(ref(db, 'raids/' + raidPin), {
                 leaderPin: leaderPin
             });
         }
 
+        function getAllData(raidPin)
+        {
+            const raidsRef = ref(database, 'raids');
+            onValue(raidsRef, (snapshot) => {
+            const data = snapshot.val();
+            gData = data;
+        });
+        }
+       
         //const dbRef = ref(getDatabase());
 
        
+       
         join.addEventListener('click', (e)=>{
-            //check if raid exists if yes join
-           open('join.html');
+            var raidPin = document.getElementById('pin').value;
+            var raidExisting = 0;
+            for (Element in gData)
+            {
+                if(Element == raidPin)
+                {
+                   raidExisting = 1;
+                }
+            }
+            if(raidExisting)
+            {
+                localStorage.setItem('raidPin',raidPin);
+                open('join.html');
+            }
+            else
+            {
+                alert("Raid not existing");
+            }
         });
 
         create.addEventListener('click', (e)=>{
             var raidPin = document.getElementById('pin').value;
-            if(raidPin <10000 && raidPin > 999)
+            var pinUniqe = 1;
+            for (Element in gData)
+            {
+                if(Element == raidPin)
+                {
+                    pinUniqe = 0;
+                }
+            }
+            
+            if(raidPin <10000 && raidPin > 999 && pinUniqe)
             {
                 var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
                 const dbref = ref(database);
@@ -75,8 +113,10 @@
                 localStorage.setItem('raidPin',raidPin);
                 alert('raidCreated');
                 open('create.html');
-                //window.location.replace("create.html");  IMA PROBLEM DA OTVORI DRUGI HTML PRIJE 
-                //NEGO STO WRITE USER DATA zavrsi.
+            }
+            else if(pinUniqe == 0)
+            {
+                alert('Raid Pin already in use');
             }
             else
             {

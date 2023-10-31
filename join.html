@@ -92,9 +92,9 @@
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
             
-            
+            localStorage.setItem("username",username);
             writeUserData(username,playerClass);
-            open('10ManPrios.html');
+            open("prioSelect.html");
         });
 
     </script>
