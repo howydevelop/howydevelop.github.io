@@ -65,13 +65,7 @@
         //getting raidPin from localStorage
         const raidPin = localStorage.getItem('raidPin'); 
 
-        //getting LeaderPin from firebase
-        const leaderPinRef = ref(db, 'raids/raid: ' + raidPin +'/leaderPin');
-        onValue(leaderPinRef, (snapshot) => {
-            const data = snapshot.val();
-            var text = document.getElementById("leaderPin");
-            text.innerHTML = data
-        });
+       
 
         //writing Username and Class to firebase
         function writeUserData(username,playerClass,) 
@@ -81,8 +75,8 @@
             {
                 playerClass: playerClass,
                 prio1: 1,
-                prio2: 2,
-                prio3: 3
+                prio2: 1,
+                prio3: 1
             
             });
         }
@@ -90,7 +84,7 @@
         join.addEventListener('click', (e)=>{
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
-            
+            localStorage.setItem('username', username);
             writeUserData(username,playerClass);
             open("prioSelect.html");
         });

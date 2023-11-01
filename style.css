@@ -97,7 +97,7 @@ table, th, td {
 .wrapper1{
     width: 420p;
     color:#fff;
-    border:2px solid rgba(255,255,255,.2);
+    border:2px solid rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 20%;
 
@@ -129,7 +129,7 @@ table, th, td {
     background:transparent;
     border:none;
     outline: none;
-    border:2px solid rgba(255,255,255,.2);
+    border:2px solid rgba(255,255,255,0.8);
     border-radius: 40px;
     font-size: 16px;
     color:#fff;
@@ -157,7 +157,7 @@ table, th, td {
     border:none;
     outline:none;
     border-radius:40px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
     cursor:pointer;
     font-size:16px;
     color:#333;
@@ -177,7 +177,7 @@ table, th, td {
     background:transparent;
     border:none;
     outline: none;
-    border:2px solid rgba(255,255,255,.2);
+    border:2px solid rgba(255,255,255,0.8);
     border-radius: 40px;
     font-size: 16px;
     color:#fff;
@@ -192,7 +192,7 @@ table, th, td {
     background:transparent;
     border:none;
     outline: none;
-    border:2px solid rgba(255,255,255,.2);
+    border:2px solid rgba(255,255,255,0.8);
     border-radius: 40px;
     font-size: 16px;
     color:#fff;

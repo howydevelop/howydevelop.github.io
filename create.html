@@ -93,8 +93,8 @@
             {
                 playerClass: playerClass,
                 prio1: 1,
-                prio2: 2,
-                prio3: 3
+                prio2: 1,
+                prio3: 1
             
             });
         }
@@ -103,7 +103,7 @@
             var username = document.getElementById('username').value;
             var playerClass = document.getElementById('classes_Select').value;
             var playerAmount = document.getElementById('playerAmount').value;
-
+            localStorage.setItem('username', username);
             
             writeUserData(username,playerClass);
             open('prioSelect.html');

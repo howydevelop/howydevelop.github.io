@@ -88,16 +88,37 @@
        
         join.addEventListener('click', (e)=>{
 
-            // musst check if leader pin or normal pin
+            //checking trough leader pins
             var raidPin = document.getElementById('pin').value;
-            if(raidPin > 999 && raidPin <10000)
+            if(raidPin >99999 && raidPin < 1000000)
+            {
+                var leaderPinValid = 0;
+                for(Element in gData)
+                {
+                    var leaderPins = gData[Element];
+                    var currentLeaderPin = leaderPins["leaderPin"];
+                    if(currentLeaderPin == raidPin)
+                    { 
+                        localStorage.setItem('raidPin', Element);
+                        leaderPinValid = 1;
+                    }
+                }
+                if(leaderPinValid)
+                {
+                    open("10ManPrios.html");
+                }else
+                {
+                    errorMessege(1,"Raid not existing");
+                }
+            }
+            else if(raidPin > 999 && raidPin <10000)
             {
                 var raidExisting = 0;
                 for (Element in gData)
                 {
                     if(Element == raidPin)
                     {
-                    raidExisting = 1;
+                        raidExisting = 1;
                     }
                 }
                 if(raidExisting)
@@ -110,9 +131,9 @@
                     errorMessege(1,"Raid not existing");
                 }
             }
-            else if(raidPin > 99999 && raidPin < 1000000)
+            else
             {
-                //look for matching raid and open raid
+                errorMessege(1,"Please use a valid Pin");
             }
            
         });
@@ -129,7 +150,6 @@
                     pinUniqe = 0;
                 }
             }
-
             //if everything is ok raid gets created
             if(raidPin <10000 && raidPin > 999 && pinUniqe)
             {

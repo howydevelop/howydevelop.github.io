@@ -13,51 +13,47 @@
 </head>
 
 <body>
-   <div class="wrapper">
+    <div class = "wrapper" style="resize: none;">
         <h2>Druckwelle</h2>
-        <label for="">Prio1: <select name="prio1" id="prio1">
-            <option value="x">x</option>
+        <form action="" style="line-height: 60px;">
+            
+                <div class="total-wraper">
+                    <div>
+                        <label1 id="username">Username:</labe1l>
+                    </div>
+                    <div>
+                        <label1 >Prio1:
+                            <select id ="select1">
 
-            </select>
-        </label> 
-        <input type="button" id="Lock" class= btn name="lock_Button" value="Lock" />
-   </div>
+                            </select>
+                        </label1>
+                    </div>
+                    <div>
+                        <label1>Prio2:
+                            <select id ="select2">
+
+                            </select>
+                        </label1>
+                    </div>
+                    <div>
+                        <label1>Prio3:
+                            <select id ="select3">
+
+                            </select>
+                        </label1>
+                    </div>
+
+                </div>
+                <input type="button" id="select" class= btn name="select_button" value="Select" />
+            </div> 
+            
+           
+        </form>
+    </div>
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-        
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
-          authDomain: "auth-e6c3e.firebaseapp.com",
-          databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
-          projectId: "auth-e6c3e",
-          storageBucket: "auth-e6c3e.appspot.com",
-          messagingSenderId: "779843063671",
-          appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        document.getElementById("username").innerHTML = "Username: " + localStorage.getItem('username');
 
-        function writeUserData(raidPin, leaderPin) 
-        {
-            const db = getDatabase();
-            set(ref(db, 'raids/raid: ' + raidPin), {
-                leaderPin: leaderPin
-            });
-        }
-
-        //const dbRef = ref(getDatabase());
-
-       
-        
-      </script>
+    </script>
 </body>
 
 </html>
