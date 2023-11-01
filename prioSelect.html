@@ -1,0 +1,90 @@
+<label style="font-size: 16px;" >
+    Prio1:<select id = select1>
+    </select> <img id ="myImg1" style="width: 50px;height: 50px; transform: translateY(40%);"> <br>
+    Prio2:<select id = select2>
+    </select> <img id ="myImg2" style="width: 50px;height: 50px; transform: translateY(40%);"> <br>
+    Prio3:<select id = select3>
+    </select> <img id ="myImg3" style="width: 50px;height: 50px; transform: translateY(40%);"> 
+</label>
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getStorage, ref, getDownloadURL, listAll  } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js"
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+      authDomain: "auth-e6c3e.firebaseapp.com",
+      databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+      projectId: "auth-e6c3e",
+      storageBucket: "auth-e6c3e.appspot.com",
+      messagingSenderId: "779843063671",
+      appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    
+
+    // Create a reference under which you want to list
+    const listRef = ref(storage, );
+    // Find all the prefixes and items.
+    var gNewOption;
+    listAll(listRef).then((res) => {
+        res.items.forEach((itemRef) => {
+            var name = itemRef['name'].replace(".png","");
+
+            var newOption= new Option(name,name);
+            gNewOption = newOption;
+            makeOption1();
+
+        });
+    });
+    function makeOption1(gNewOption)
+    {
+        const select1 = document.getElementById('select1');
+        select1.add(gNewOption,undefined);
+            
+    }
+    function makeOption2(gNewOption)
+    {
+        const select2 = document.getElementById('select2');
+        select2.add(gNewOption,undefined);
+    }
+
+    //checking if something was selected:
+    var selectField1 = document.getElementById('sel1');
+    selectField1.addEventListener('change', function (e) {
+        getDownloadURL(ref(storage, selectField1.value + '.png')).then((url) =>
+        {
+            document.getElementById('myImg1').setAttribute('src',url);
+            
+        });
+    });
+
+    var selectField2 = document.getElementById('sel2');
+    selectField2.addEventListener('change', function (e) {
+        getDownloadURL(ref(storage, selectField2.value + '.png')).then((url) =>
+        {
+            document.getElementById('myImg2').setAttribute('src',url);
+            
+        });
+    });
+
+    var selectField3 = document.getElementById('sel3');
+    selectField3.addEventListener('change', function (e) {
+        getDownloadURL(ref(storage, selectField3.value + '.png')).then((url) =>
+        {
+            document.getElementById('myImg3').setAttribute('src',url);
+            
+        });
+    });
+    
+
+
+  </script>

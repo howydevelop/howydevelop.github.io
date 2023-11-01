@@ -16,26 +16,24 @@
     <div class = "wrapper">
         <form action="">
             <h2>Druckwelle</h2>
-            <h1>Login</h1>
             <div class="input-box">
-                <input type="text" id="username" placeholder="Username" required>
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="text" id="password" placeholder="Password" required>
+                <input type="text" id="pin" placeholder="Pin" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
-            <div class="input-box">
-                <input type="text" id="email" name="email" placeholder="E-mail" />
-            </div class=btn>
-            <input type="button" id="signUp" class= btn name="signup_submit" value="Sign up" />
+            <input type="button" id="join" class= btn name="join_Button" value="Join" />
+            <input type="button" id="create" class= btn name="create" value="Create" />
+            <div class="errorField" id = "errorField" style=" background-color: rgba(0, 0 ,0, 0.3); text-align: center; transform: translateY(50%); color: transparent; font-size-adjust: none; font: bold;">
+                
+            </div>
         </form>
     </div>
+    
+    
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { getDatabase,onValue, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
@@ -53,46 +51,125 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        const auth = getAuth();
-        function writeUserData(userId, name, email, imageUrl) 
+
+        window.onload = getAllData;
+        var gData;
+
+        function writeUserData(raidPin, leaderPin) 
         {
             const db = getDatabase();
-            set(ref(db, 'users/' + userId), {
-                username: name,
-                email: email,
+            set(ref(db, 'raids/' + raidPin), {
+                leaderPin: leaderPin
             });
         }
 
-        //const dbRef = ref(getDatabase());
+        function getAllData(raidPin)
+        {
+            const raidsRef = ref(database, 'raids');
+            onValue(raidsRef, (snapshot) => {
+            const data = snapshot.val();
+            gData = data;
+        });
+        }
+        function errorMessege(state,text)
+        {
+            var error = document.getElementById("errorField");
+            if(state)
+            {
+                error.textContent = text;
+                error.style.color = "white";
+            }
+            else
+            {
+                error.textContent ="";
+            }
 
-        signUp.addEventListener('click', (e)=>{
-            var email = document.getElementById('email').value;
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            const dbref = ref(database);
-            createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                get(child(dbref, "users/" + 2)).then((snapshot)=>{if(snapshot.exists())
+        }
+       
+        join.addEventListener('click', (e)=>{
+
+            //checking trough leader pins
+            var raidPin = document.getElementById('pin').value;
+            if(raidPin >99999 && raidPin < 1000000)
+            {
+                var leaderPinValid = 0;
+                for(Element in gData)
                 {
-                    console.log("user already existing");
-                    return 0;
+                    var leaderPins = gData[Element];
+                    var currentLeaderPin = leaderPins["leaderPin"];
+                    if(currentLeaderPin == raidPin)
+                    { 
+                        localStorage.setItem('raidPin', Element);
+                        leaderPinValid = 1;
+                    }
                 }
-                })
+                if(leaderPinValid)
+                {
+                    open("10ManPrios.html");
+                }else
+                {
+                    errorMessege(1,"Raid not existing");
+                }
+            }
+            else if(raidPin > 999 && raidPin <10000)
+            {
+                var raidExisting = 0;
+                for (Element in gData)
+                {
+                    if(Element == raidPin)
+                    {
+                        raidExisting = 1;
+                    }
+                }
+                if(raidExisting)
+                {
+                    localStorage.setItem('raidPin',raidPin);
+                    open('join.html');
+                }
+                else
+                {
+                    errorMessege(1,"Raid not existing");
+                }
+            }
+            else
+            {
+                errorMessege(1,"Please use a valid Pin");
+            }
+           
+        });
 
-                writeUserData(2, username, email, null);
-                alert('userCreated');
-                open("login.html");
-                
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(error.message);
-            });
+        create.addEventListener('click', (e)=>{
+            var raidPin = document.getElementById('pin').value;
+            var pinUniqe = 1;
 
+            //checking trough data to check if the raid already exists
+            for (Element in gData)
+            {
+                if(Element == raidPin)
+                {
+                    pinUniqe = 0;
+                }
+            }
+            //if everything is ok raid gets created
+            if(raidPin <10000 && raidPin > 999 && pinUniqe)
+            {
+                var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
+
+                writeUserData(raidPin, raidLeaderPin);
+
+                localStorage.setItem('raidPin',raidPin);
+
+                errorMessege(1,"Raid created");
+                open('create.html');
+            }
+            else if(pinUniqe == 0)
+            {
+                errorMessege(1,"Raid Pin already in use");
+            }
+            else
+            {
+                errorMessege(1,"Please use 4 Digits to Create a Raid");
+            }
         });
       </script>
 </body>

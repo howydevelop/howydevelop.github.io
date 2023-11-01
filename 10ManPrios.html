@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <meta charset = "UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content = "width=device-width",
+    inital-scale="1.0">
+    <title>Druckwelle</title>
+    <link rel="stylesheet" href="tableStyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class = wrapper>
+        <h2>Druckwelle</h2>
+        <h1 id="raidPinDisplay">Raid: </h1>
+        <table>
+            <tr>
+                <th style="resize: auto;">Fixate</th>
+                <th style="resize: auto;">Username</th>
+                <th style="resize: auto;" >Class</th>
+                <th style="resize: auto;" >Prio 1</th>
+                <th style="resize: auto;">Prio 2</th>
+                <th style="resize: auto;">Prio 3</th>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username1"></td>
+                <td id = "playerClass1"></td>
+                <td id ="player1Prio1"></td>
+                <td id = "player1Prio2"></td>
+                <td id = "player1Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username2"></td>
+                <td id = "playerClass2"></td>
+                <td id ="player2Prio1"></td>
+                <td id = "player2Prio2"></td>
+                <td id = "player2Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username3"></td>
+                <td id = "playerClass3"></td>
+                <td id ="player3Prio1"></td>
+                <td id = "player3Prio2"></td>
+                <td id = "player3Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username4"></td>
+                <td id = "playerClass4"></td>
+                <td id ="player4Prio1"></td>
+                <td id = "player4Prio2"></td>
+                <td id = "player4Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username5"></td>
+                <td id = "playerClass5"></td>
+                <td id ="player5Prio1"></td>
+                <td id = "player5Prio2"></td>
+                <td id = "player5Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username6"></td>
+                <td id = "playerClass6"></td>
+                <td id ="player6Prio1"></td>
+                <td id = "player6Prio2"></td>
+                <td id = "player6Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username7"></td>
+                <td id = "playerClass7"></td>
+                <td id ="player7Prio1"></td>
+                <td id = "player7Prio2"></td>
+                <td id = "player7Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username8"></td>
+                <td id = "playerClass8"></td>
+                <td id ="player8Prio1"></td>
+                <td id = "player8Prio2"></td>
+                <td id = "player8Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username9"></td>
+                <td id = "playerClass9"></td>
+                <td id ="player9Prio1"></td>
+                <td id = "player9Prio2"></td>
+                <td id = "player9Prio3"></td>
+            </tr>
+            <tr>
+                <th><button style="scale: 150%;">Fixed</button></th>
+                <td id = "username10"></td>
+                <td id = "playerClass10"></td>
+                <td id ="player10Prio1"></td>
+                <td id = "player10Prio2"></td>
+                <td id = "player10Prio3"></td>
+            </tr>
+          </table>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+            authDomain: "auth-e6c3e.firebaseapp.com",
+            databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+            projectId: "auth-e6c3e",
+            storageBucket: "auth-e6c3e.appspot.com",
+            messagingSenderId: "779843063671",
+            appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const raidPin = localStorage.getItem('raidPin'); 
+
+        var gData;
+
+         //getting LeaderPin from firebase
+        const raidRef = ref(db, 'raids/' + raidPin+'/players');
+        
+        function fillTable()
+        {
+            var i = 1;
+            for(Element in gData)
+            {
+                const username = Element;
+                const userdata = gData[Element];
+                const playerClass = userdata["playerClass"];
+                const prio1 =  userdata["prio1"];
+                const prio2 = userdata["prio2"];
+                const prio3 = userdata["prio3"];
+
+                document.getElementById("username"+i).innerHTML = username;
+                document.getElementById("playerClass"+i).innerHTML = playerClass;
+                document.getElementById("player"+i+"Prio1").innerHTML =prio1;
+                document.getElementById("player"+i+"Prio2").innerHTML =prio2;
+                document.getElementById("player"+i+"Prio3").innerHTML =prio3;
+
+                i++;
+            }
+            
+            // you can go deeper in database tree by setting a var 
+            //to current branch and then going a folder lower on next var
+        }
+
+        onValue(raidRef, (snapshot) => {
+            const data = snapshot.val();
+            gData =data;
+            fillTable();
+        });
+            
+
+
+        var text = document.getElementById('raidPinDisplay');
+        
+        text.innerHTML = "Raid Pin: " +raidPin;
+
+
+
+    </script>
+</body>
+
+</html>
