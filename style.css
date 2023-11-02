@@ -212,3 +212,47 @@ table, th, td {
     transform: translateX(-150px) translateY(0px);
     color: rgb(255, 255, 255);
 }
+.wrapper2 
+{
+    background-color: transparent;
+    background:transparent;
+    border:none;
+    outline: none;
+    border:2px solid rgba(255,255,255,0.8);
+    border-radius: 80px;
+    font-size: 16px;
+    color:#fff;
+    padding: 50px 20px 100px 20px;
+
+    
+}
+.wrapper2 .single-wrapper
+{
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    background:transparent;
+    border:none;
+    outline: none;
+    border:2px solid rgba(255,255,255,0.8);
+    border-radius: 40px;
+    font-size: 16px;
+    color:#fff;
+    padding: 0px 20px 30px 20px;
+}
+.wrapper2 .btn {
+    width: 40%;
+    height: 40px;
+    transform: translateX(80%) translateY(40px);
+    background: #fff;
+    border:none;
+    outline:none;
+    border-radius:40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    cursor:pointer;
+    font-size:16px;
+    color:#333;
+    font-weight: 600;
+
+
+}
