@@ -59,8 +59,8 @@
         </form>
     </div>
     <script type = "module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
@@ -86,26 +86,30 @@
         });
 
         //writing Username and Class to firebase
-        function writeUserData(username,playerClass,) 
+        function writeUserData(username,player_Class,) 
         {
             const db = getDatabase();
             set(ref(db, 'raids/'+ raidPin+'/players/' + username), 
             {
-                playerClass: playerClass,
-                prio1: 1,
-                prio2: 1,
-                prio3: 1
-            
+                playerClass: player_Class
+            });
+        }
+        function setPlayerCount(player_Count) 
+        {
+            const db = getDatabase();
+            set(ref(db, 'raids/' + raidPin +"/playerCount"), {
+                player_Count
             });
         }
 
         create.addEventListener('click', (e)=>{
             var username = document.getElementById('username').value;
-            var playerClass = document.getElementById('classes_Select').value;
+            var player_Class = document.getElementById('classes_Select').value;
             var playerAmount = document.getElementById('playerAmount').value;
             localStorage.setItem('username', username);
-            
-            writeUserData(username,playerClass);
+            localStorage.setItem('playerClass', player_Class);
+            writeUserData(username,player_Class);
+            setPlayerCount(playerAmount);
             open('prioSelect.html');
         });
 
