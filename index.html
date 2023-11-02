@@ -54,12 +54,13 @@
 
         window.onload = getAllData;
         var gData;
+        var maxPlayers;
 
-        function writeUserData(raidPin, leaderPin) 
+        function writeUserData(raidPin, leader_Pin,player_Count) 
         {
             const db = getDatabase();
             set(ref(db, 'raids/' + raidPin), {
-                leaderPin: leaderPin
+                leaderPin: leader_Pin
             });
         }
 
@@ -85,14 +86,11 @@
             }
 
         }
-       
-        join.addEventListener('click', (e)=>{
 
-            //checking trough leader pins
-            var raidPin = document.getElementById('pin').value;
-            if(raidPin >99999 && raidPin < 1000000)
-            {
-                var leaderPinValid = 0;
+
+        function checkLeaderPin(raidPin)
+        {
+            var leaderPinValid = 0;
                 for(Element in gData)
                 {
                     var leaderPins = gData[Element];
@@ -105,15 +103,16 @@
                 }
                 if(leaderPinValid)
                 {
-                    open("priosTabble.html");
+                    open("priosTabble.html");   
                 }else
                 {
                     errorMessege(1,"Raid not existing");
                 }
-            }
-            else if(raidPin > 999 && raidPin <10000)
-            {
-                var raidExisting = 0;
+        }
+        
+        function checkPlayerPin(raidPin)
+        {
+            var raidExisting = 0;
                 for (Element in gData)
                 {
                     if(Element == raidPin)
@@ -121,8 +120,14 @@
                         raidExisting = 1;
                     }
                 }
+
+
                 if(raidExisting)
                 {
+                    
+                    var currentPlayers = checkCurentPlayers(raidPin);
+
+                    console.log( maxPlayers +"   " + currentPlayers);
                     localStorage.setItem('raidPin',raidPin);
                     open('join.html');
                 }
@@ -130,6 +135,49 @@
                 {
                     errorMessege(1,"Raid not existing");
                 }
+        }
+
+        function createRaid(raidPin)
+        {
+            var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
+
+                writeUserData(raidPin, raidLeaderPin);
+
+                localStorage.setItem('raidPin',raidPin);
+
+                errorMessege(1,"Raid created");
+                open('create.html');
+        }
+
+        function checkMaxPlayers(raidPin)
+        {
+            const amountOfPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/max_Players");
+            onValue(amountOfPlayersRef, (snapshot) => {
+            const data = snapshot.val();
+            maxPlayers = data;
+            });
+        }
+
+        function checkCurentPlayers(raidPin)
+        {
+            const amountOfPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/curentPlayers");
+            onValue(amountOfPlayersRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+            });
+        }
+
+        join.addEventListener('click', (e)=>{
+
+            //checking trough leader pins
+            var raidPin = document.getElementById('pin').value;
+            if(raidPin >99999 && raidPin < 1000000)
+            {
+               checkLeaderPin(raidPin);
+            }
+            else if(raidPin > 999 && raidPin <10000)
+            {
+               checkPlayerPin(raidPin);
             }
             else
             {
@@ -153,14 +201,7 @@
             //if everything is ok raid gets created
             if(raidPin <10000 && raidPin > 999 && pinUniqe)
             {
-                var raidLeaderPin = 100000+Math.floor(Math.random() * 900000);
-
-                writeUserData(raidPin, raidLeaderPin);
-
-                localStorage.setItem('raidPin',raidPin);
-
-                errorMessege(1,"Raid created");
-                open('create.html');
+                createRaid(raidPin);
             }
             else if(pinUniqe == 0)
             {
