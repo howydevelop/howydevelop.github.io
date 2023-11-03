@@ -72,9 +72,9 @@ body
 }
 
 .wrapper .btn {
-    width: 400px;
-    height: 40px;
-    transform: translateX(50%);
+    width: 100px;
+    height: 50px;
+    transform: translatey(-20%);
     background: #fff;
     border:none;
     outline:none;

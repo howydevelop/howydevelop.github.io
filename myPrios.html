@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <meta charset = "UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content = "width=device-width",
+    inital-scale="1.0">
+    <title>Druckwelle</title>
+    <link rel="stylesheet" href="tableStyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class = wrapper>
+        <h2>Druckwelle</h2>
+        <h1 id="raidPinDisplay">Raid Pin: </h1>
+        <table>
+            <tr>
+                
+                <th style="resize: auto;">Username</th>
+                <th style="resize: auto;" >Class</th>
+                <th style="resize: auto;" >Prio 1</th>
+                <th style="resize: auto;">Prio 2</th>
+                <th style="resize: auto;">Prio 3</th>
+            </tr>
+            <tr>
+                
+                <td id = "username1"></td>
+                <td id = "playerClass1"></td>
+                <td id ="player1Prio1"></td>
+                <td id = "player1Prio2"></td>
+                <td id = "player1Prio3"></td>
+            </tr>
+          </table>
+          
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import {  getDatabase, ref, onValue,set, get, child } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpqgEi1rRjjz-JKJGScvBJw1BYG7Wp-Ss",
+            authDomain: "auth-e6c3e.firebaseapp.com",
+            databaseURL: "https://auth-e6c3e-default-rtdb.firebaseio.com",
+            projectId: "auth-e6c3e",
+            storageBucket: "auth-e6c3e.appspot.com",
+            messagingSenderId: "779843063671",
+            appId: "1:779843063671:web:251ff503bf6cab66ffdb72"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const raidPin = localStorage.getItem('raidPin'); 
+        const username = localStorage.getItem('username');
+        const leaderPin = localStorage.getItem('leaderPin');
+ 
+        var gData;
+
+         //getting LeaderPin from firebase
+        const raidRef = ref(db, 'raids/' + raidPin+'/players');
+
+        const lockRefState = ref(db, 'state/lockState');
+
+        onValue(lockRefState,(snapshot)=>{
+            const data = snapshot.val();
+            
+            if(data == 1)
+            {
+                open('priosTabble.html');
+            }
+
+        });
+
+        onValue(raidRef, (snapshot) => {
+            const data = snapshot.val();
+            gData =data;
+            fillTable();
+        });
+        
+        function fillTable()
+        {
+            for(Element in gData)
+            {
+                if(Element == username)
+                {
+                    const userdata = gData[Element];
+                    const playerClass = userdata["playerClass"];
+                    const prio1 =  userdata["prio1"];
+                    const prio2 = userdata["prio2"];
+                    const prio3 = userdata["prio3"];
+
+                    document.getElementById("username1").innerHTML = username;
+                    document.getElementById("playerClass1").innerHTML = playerClass;
+                    document.getElementById("player1Prio1").innerHTML =prio1;
+                    document.getElementById("player1Prio2").innerHTML =prio2;
+                    document.getElementById("player1Prio3").innerHTML =prio3;
+                }
+            }
+        }
+
+        var text = document.getElementById('raidPinDisplay');
+        text.innerHTML = "Raid Pin: " +raidPin;
+
+    </script>
+</body>
+
+</html>

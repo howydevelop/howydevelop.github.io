@@ -82,7 +82,8 @@
         onValue(leaderPinRef, (snapshot) => {
             const data = snapshot.val();
             var text = document.getElementById("leaderPin");
-            text.innerHTML = data
+            text.innerHTML = data;
+            localStorage.setItem('leaderPin',data);
         });
 
         //writing Username and Class to firebase
@@ -94,22 +95,27 @@
                 playerClass: player_Class
             });
         }
-        function setPlayerCount(player_Count) 
+        function setPlayerCount(max_Players,curentPlayers) 
         {
             const db = getDatabase();
             set(ref(db, 'raids/' + raidPin +"/playerCount"), {
-                player_Count
+                max_Players,
+                curentPlayers
             });
         }
 
         create.addEventListener('click', (e)=>{
             var username = document.getElementById('username').value;
             var player_Class = document.getElementById('classes_Select').value;
-            var playerAmount = document.getElementById('playerAmount').value;
+            var max_Players = document.getElementById('playerAmount').value;
+            var curentPlayers = 1;
+            
             localStorage.setItem('username', username);
             localStorage.setItem('playerClass', player_Class);
+            localStorage.setItem('role', "creater");
+
             writeUserData(username,player_Class);
-            setPlayerCount(playerAmount);
+            setPlayerCount(max_Players,curentPlayers);
             open('prioSelect.html');
         });
 

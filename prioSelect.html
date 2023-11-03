@@ -30,7 +30,7 @@
                 </select> <img id ="myImg3" style="width: 50px;height: 50px; transform: translateY(40%);"> <br>
             </div>
             <div>
-                <input type="button" id="lock" class= btn name="lock_button" value="Lock" />
+                <input type="button" id="lock" class= btn name="lock_button" value="Select" />
             </div>
         </div>
     
@@ -114,17 +114,60 @@
                 
             });
         });
+        var lockState;
+
+        function getState()
+        {
+            const stateRef = databaseref(db,"state/lockState");
+            onValue(stateRef, (snapshot) => {
+                const data = snapshot.val();
+                lockState = data;
+
+            });
+        }
+        
+        window.onload = getState;
+        
 
         lock.addEventListener('click', (e)=>{
+
             const db = getDatabase();
-            set(databaseref(db, 'raids/' + raidPin+'/players/' + username), 
-            {
-                playerClass: localStorage.getItem('playerClass'),
-                prio1: selectField1.value,
-                prio2: selectField2.value,
-                prio3: selectField3.value
+            const stateRef = databaseref(db,"state/lockState");
+            var lockState;
+
+            onValue(stateRef, (snapshot) => {
+                const data = snapshot.val();
+                lockState = data;
             });
-            open('priosTabble.html');
+
+            console.log(lockState);
+            var role = localStorage.getItem('role');
+            
+            if(lockState == 1)
+            {
+                alert("Changes are not possible");
+                open('priosTabble.html');
+            }
+            else if (lockState==0)
+            {
+                set(databaseref(db, 'raids/' + raidPin+'/players/' + username), 
+                {
+                    playerClass: localStorage.getItem('playerClass'),
+                    prio1: selectField1.value,
+                    prio2: selectField2.value,
+                    prio3: selectField3.value
+                });
+                if(role == "creater")
+                {
+                    open('priosTabble.html');
+                }
+                else
+                {
+                    open('myPrios.html');
+                }
+            }
+
+            
         });
     
       </script>

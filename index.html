@@ -54,7 +54,8 @@
 
         window.onload = getAllData;
         var gData;
-        var maxPlayers;
+        var isSpace = 0;
+        var newCurentPlayers;
 
         function writeUserData(raidPin, leader_Pin,player_Count) 
         {
@@ -72,6 +73,7 @@
             gData = data;
         });
         }
+
         function errorMessege(state,text)
         {
             var error = document.getElementById("errorField");
@@ -98,6 +100,7 @@
                     if(currentLeaderPin == raidPin)
                     { 
                         localStorage.setItem('raidPin', Element);
+
                         leaderPinValid = 1;
                     }
                 }
@@ -121,15 +124,19 @@
                     }
                 }
 
-
                 if(raidExisting)
                 {
-                    
-                    var currentPlayers = checkCurentPlayers(raidPin);
-
-                    console.log( maxPlayers +"   " + currentPlayers);
-                    localStorage.setItem('raidPin',raidPin);
-                    open('join.html');
+                    const maxPlayers = checkMaxPlayers(raidPin);
+                    if(isSpace)
+                    {
+                        increasePlayerCount(raidPin, newCurentPlayers, maxPlayers);
+                        localStorage.setItem('raidPin',raidPin);
+                        open('join.html');
+                    }
+                    else
+                    {
+                        errorMessege(1,"Raid full");
+                    }
                 }
                 else
                 {
@@ -148,24 +155,45 @@
                 errorMessege(1,"Raid created");
                 open('create.html');
         }
-
+        
         function checkMaxPlayers(raidPin)
         {
-            const amountOfPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/max_Players");
-            onValue(amountOfPlayersRef, (snapshot) => {
-            const data = snapshot.val();
-            maxPlayers = data;
+            const maxPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/max_Players");
+            var maxPlayers;
+            onValue(maxPlayersRef, (snapshot) => {
+                maxPlayers = snapshot.val();
+
+                const curentPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/curentPlayers");
+                onValue(curentPlayersRef, (snapshot) => {
+                const curentPlayers = snapshot.val();
+                newCurentPlayers = curentPlayers+1;
+                console.log("new player count = " + newCurentPlayers);
+                console.log(curentPlayers +"   "+ maxPlayers);
+
+                if(curentPlayers < maxPlayers)
+                {
+                    isSpace = 1;
+                }
+                else isSpace =0;
+                });
+
+            });
+            return maxPlayers;
+        }
+
+        function increasePlayerCount(raidPin, newCurentPlayers,maxPlayers)
+        {
+            const db = getDatabase();
+            set(ref(db, 'raids/' + raidPin +"/playerCount"), 
+            {
+                curentPlayers:newCurentPlayers,
+                max_Players:maxPlayers,
             });
         }
 
-        function checkCurentPlayers(raidPin)
-        {
-            const amountOfPlayersRef = ref(database, 'raids/'+raidPin +"/playerCount/curentPlayers");
-            onValue(amountOfPlayersRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log(data);
-            });
-        }
+
+
+        // Buttons ------------------------------------------------------
 
         join.addEventListener('click', (e)=>{
 
